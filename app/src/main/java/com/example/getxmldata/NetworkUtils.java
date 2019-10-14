@@ -15,25 +15,20 @@ public class NetworkUtils {
     private static final String LOG_TAG =
             NetworkUtils.class.getSimpleName();
 
-    // Base URL for Books API.
-    private static final String CAR_BASE_URL =  "https://www.fueleconomy.gov/ws/rest/ympg/shared/ympgVehicle/26425";
-    // Parameter for the search string.
-    private static final String QUERY_PARAM = "q";
-    // Parameter that limits search results.
-    private static final String MAX_RESULTS = "maxResults";
-    // Parameter to filter by print type.
-    private static final String PRINT_TYPE = "printType";
+    // Base URL for Vehicle API.
+    // https://vpic.nhtsa.dot.gov/api/
+    private static final String CAR_BASE_URL =  "https://vpic.nhtsa.dot.gov/api/vehicles/getmanufacturerdetails/989?";
+    // Parameter to specify XML return data.
+    private static final String FORMAT = "format";
 
     static String getBookInfo(String queryString){
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
-        String carJSONString = null;
+        String carXMLString = null;
 
         try {
             Uri builtURI = Uri.parse(CAR_BASE_URL).buildUpon()
-                    .appendQueryParameter(QUERY_PARAM, queryString)
-                    .appendQueryParameter(MAX_RESULTS, "10")
-                    .appendQueryParameter(PRINT_TYPE, "books")
+                    .appendQueryParameter(FORMAT, "XML")
                     .build();
 
             URL requestURL = new URL(builtURI.toString());
@@ -65,7 +60,7 @@ public class NetworkUtils {
                 return null;
             }
 
-            carJSONString = builder.toString();
+            carXMLString = builder.toString();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,7 +77,7 @@ public class NetworkUtils {
             }
         }
 
-        Log.d(LOG_TAG, carJSONString);
-        return carJSONString;
+        Log.d(LOG_TAG, carXMLString);
+        return carXMLString;
     }
 }

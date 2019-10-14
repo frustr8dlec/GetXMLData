@@ -41,7 +41,7 @@ public class GetCar extends AsyncTask<String, Void, String> {
 
 
             try {
-                mpg = data.get("avgMpg");
+                mpg = data.get("Address");
             } catch (Exception e) {
                 e.printStackTrace();
             }
